@@ -23,7 +23,7 @@
             // tableau des noeuds qu'on va ajouter au graphe
             var noeuds = [];
 
-            // un nouveau materiel pour quelque noeuds et lignes
+            // un nouveau materiel pour quelques noeuds et lignes (optionnel)
             var material = new THREE.MeshBasicMaterial({color: 0x5FBA77});  
 
             noeuds.push(graphe.noeud(-150,60,material));
@@ -31,9 +31,10 @@
             noeuds.push(graphe.noeud(-200,70));
             noeuds.push(graphe.noeud(-170,30));
             noeuds.push(graphe.noeud(-120,80));
-            
-            // false pour qu'on peut pas deplacer le noeud
+
+            // false pour qu'on ne peut pas deplacer le noeud
             noeuds.push(graphe.noeud(-10,50,material,3,false));
+
             noeuds.push(graphe.noeud(130,40,material));
             noeuds.push(graphe.noeud(170,80));
             noeuds.push(graphe.noeud(140,90));
@@ -48,17 +49,17 @@
             noeuds.push(graphe.noeud(-90,-60));
             noeuds.push(graphe.noeud(-30,-80));
 
-            // ajouter les arcs
+            // ajouter les arcs entre 2 noeuds
             graphe.arc(noeuds[5],noeuds[0],material);
             graphe.arc(noeuds[5],noeuds[6],material);
             graphe.arc(noeuds[5],noeuds[14],material);
 
+            // ajouter les arcs entre plusieurs noeuds
             graphe.arcToMultipleNoeud(noeuds[0],[noeuds[1],noeuds[2],noeuds[3],noeuds[4]]);
             graphe.arcToMultipleNoeud(noeuds[6],[noeuds[7],noeuds[8],noeuds[9],noeuds[10],noeuds[11],noeuds[12],noeuds[13]]);
             graphe.arcToMultipleNoeud(noeuds[14],[noeuds[15],noeuds[16],noeuds[17],noeuds[18]]);
 
             graphe.creerGraphe();
-            //       graphe.creerNoeuds();
 
 
         </script>
