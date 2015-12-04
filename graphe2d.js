@@ -28,8 +28,8 @@ function Graphe(cam,color,grille ,axes) {
     //la methode qui crée des noeuds
     //un noeud est representé par un cercle
     //mat : c'est un matériel , deplacable : si on veut autoriser le deplacement de noeud ou pas
-    this.noeud = function(x, y, mat, radiu, deplacable) {
-        var radius = radiu || 2.5;
+    this.noeud = function(x, y, mat, rayon, deplacable) {
+        var radius = rayon || 4;
         var segments = 32;
         var circleGeometry = new THREE.CircleGeometry( radius, segments );
         var circle = new THREE.Mesh( circleGeometry, mat || material );
@@ -63,9 +63,9 @@ function Graphe(cam,color,grille ,axes) {
     }
 
     //la methode qui crée des arcs entre plusieurs noeuds
-    this.arcToMultipleNoeud =  function(noeud1, noeud2, mat) {
-        for(var i = 0 ; i < noeud2.length ; i ++) {
-            this.arc(noeud1, noeud2[i], mat);
+    this.arcToMultipleNoeud =  function(noeud1, Listenoeuds, mat) {
+        for(var i = 0 ; i < Listenoeuds.length ; i ++) {
+            this.arc(noeud1, Listenoeuds[i], mat);
         }
     }
 
@@ -91,20 +91,23 @@ function Graphe(cam,color,grille ,axes) {
         var cameraDefault = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
         cameraDefault.position.z=100;
 
-        // si on a pas definie une camera lors de création de graphe alors on utilise celle par defaut
+        // si on a pas defini une camera lors de création de graphe alors on utilise celle par defaut
         camera = cam || cameraDefault;
 
         // créer la scène
         scene = new THREE.Scene();  
 
-        // la grille
-        var gridHelper = new THREE.GridHelper( width, 10 );
-        gridHelper.rotation.x = Math.PI/2;
-
-        // si lors de création de graphe on a pas definie la grille alors on utilise celle par defaut
-        scene.add( grille || gridHelper );
-
-        // si on a pas désactivé les axes on les ajoute a la scéne
+        if(grille != false){
+            // la grille
+            var gridHelper = new THREE.GridHelper( width, 10 );
+            gridHelper.rotation.x = Math.PI/2;
+            if(grille != undefined) {
+                grille.rotation.x = Math.PI/2;
+            }
+            // si lors de création de graphe on a pas defini la grille alors on utilise celle par defaut
+            scene.add( grille || gridHelper );
+        }
+        // si on a pas désactivé les axes on les ajoute sur scène
         if (axes != false) {
             scene.add( new THREE.AxisHelper( width/2 ) );
         }
@@ -131,16 +134,8 @@ function Graphe(cam,color,grille ,axes) {
         renderer.domElement.addEventListener( 'mouseup', onDocumentMouseUp, false );
         renderer.sortObjects = false;
 
-        //
-        window.addEventListener( 'resize', onWindowResize, false );
-
     }
-    function onWindowResize() {
 
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize( window.innerWidth, window.innerHeight );
-    }
 
 
     // l'événement lors le deplacement de la souris
