@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Graphe 2D - Younes HAJJI</title>
+    <style>
+        body {
+            font-family: Monospace;
+            background-color: #fff;
+            margin: 0px;
+            overflow: hidden;
+        }
+
+    </style>
+    </head>
+    <body>
+
+        <script src="http://mrdoob.github.io/three.js/build/three.min.js"></script>
+        <script src="graphe2d.js"></script>
+
+        <script>
+            // instancier le graphe
+            var graphe = new Graphe();
+
+            // tableau des noeuds qu'on va ajouter au graphe
+            var noeuds = [];
+
+            // un nouveau materiel pour quelques noeuds et lignes (optionnel)
+            var material = new THREE.MeshBasicMaterial({color: 0x5FBA77});  
+
+            noeuds.push(graphe.noeud(-150,60));
+            noeuds.push(graphe.noeud(-180,90));
+            noeuds.push(graphe.noeud(-200,70));
+            noeuds.push(graphe.noeud(-170,30));
+            noeuds.push(graphe.noeud(-120,80));
+
+            // false pour qu'on ne peut pas deplacer le noeud
+            noeuds.push(graphe.noeud(-10,50,material,3,false));
+
+            noeuds.push(graphe.noeud(130,40));
+            noeuds.push(graphe.noeud(170,80));
+            noeuds.push(graphe.noeud(140,90));
+            noeuds.push(graphe.noeud(190,30));
+            noeuds.push(graphe.noeud(140,-10));
+            noeuds.push(graphe.noeud(60,30));
+            noeuds.push(graphe.noeud(90,80));
+            noeuds.push(graphe.noeud(100,-10));
+            noeuds.push(graphe.noeud(-40,-50));
+            noeuds.push(graphe.noeud(-10,-20));
+            noeuds.push(graphe.noeud(-60,-20));
+            noeuds.push(graphe.noeud(-90,-60));
+            noeuds.push(graphe.noeud(-30,-80));
+
+            // ajouter les arcs entre 2 noeuds
+            graphe.arc(noeuds[5],noeuds[0],material);
+            graphe.arc(noeuds[5],noeuds[6],material);
+            graphe.arc(noeuds[5],noeuds[14],material);
+
+            // ajouter les arcs entre plusieurs noeuds
+            graphe.arcToMultipleNoeud(noeuds[0],[noeuds[1],noeuds[2],noeuds[3],noeuds[4]]);
+            graphe.arcToMultipleNoeud(noeuds[6],[noeuds[7],noeuds[8],noeuds[9],noeuds[10],noeuds[11],noeuds[12],noeuds[13]]);
+            graphe.arcToMultipleNoeud(noeuds[14],[noeuds[15],noeuds[16],noeuds[17],noeuds[18]]);
+
+            graphe.creerGraphe();
+
+
+        </script>
+
+
+
+    </body>
+</html>
